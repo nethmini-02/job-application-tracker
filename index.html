@@ -2,10 +2,37 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Job Application Tracker</title>
 </head>
 <body>
   <h1>Job Application Tracker</h1>
-  <p>Version 0.1 - Sprint 1 starter build</p>
+  <p>Version 0.3 - Sprint 1 build</p>
+
+  <input id="company" placeholder="Company">
+  <input id="role" placeholder="Role">
+  <select id="status">
+    <option>Applied</option>
+    <option>Interview</option>
+    <option>Offer</option>
+    <option>Rejected</option>
+  </select>
+  <button id="add">Add application</button>
+
+  <ul id="list"></ul>
+
+  <script>
+    document.getElementById('add').addEventListener('click', function () {
+      var company = document.getElementById('company').value;
+      var role = document.getElementById('role').value;
+      var status = document.getElementById('status').value;
+      if (!company || !role) { return; }
+      var li = document.createElement('li');
+      li.textContent = company + ' - ' + role + ' (' + status + ')';
+      document.getElementById('list').appendChild(li);
+         document.getElementById('company').value = '';
+   document.getElementById('role').value = '';
+    });
+  </script>
 </body>
 </html>
