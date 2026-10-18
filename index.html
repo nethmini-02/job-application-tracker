@@ -7,7 +7,7 @@
 </head>
 <body>
   <h1>Job Application Tracker</h1>
-  <p>Version 0.4 - Sprint 1 build</p>
+  <p>Version 0.5 - Sprint 2 build</p>
 
   <input id="company" placeholder="Company">
   <input id="role" placeholder="Role">
@@ -23,6 +23,7 @@
 
   <script>
     var KEY = 'jat-applications';
+    var STATUSES = ['Applied', 'Interview', 'Offer', 'Rejected'];
     var applications = [];
 
     function load() {
@@ -42,9 +43,22 @@
     function render() {
       var list = document.getElementById('list');
       list.innerHTML = '';
-      applications.forEach(function (app) {
+      applications.forEach(function (app, index) {
         var li = document.createElement('li');
-        li.textContent = app.company + ' - ' + app.role + ' (' + app.status + ')';
+        li.appendChild(document.createTextNode(app.company + ' - ' + app.role + ' '));
+        var select = document.createElement('select');
+        select.setAttribute('aria-label', 'Status for ' + app.company);
+        STATUSES.forEach(function (s) {
+          var option = document.createElement('option');
+          option.textContent = s;
+          if (s === app.status) { option.selected = true; }
+          select.appendChild(option);
+        });
+        select.addEventListener('change', function () {
+          applications[index].status = select.value;
+          save();
+        });
+        li.appendChild(select);
         list.appendChild(li);
       });
     }
